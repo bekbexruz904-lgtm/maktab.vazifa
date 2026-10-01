@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#2B56E5" />
+    <meta name="description" content="Maktab uchun uy vazifalari, kalendar va yutuqlar ilovasi" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-startup-image" href="/splash/1179x2556.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="/splash/1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="/splash/1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="/splash/1284x2778.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="/splash/1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="/splash/828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="/splash/750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="/splash/1668x2388.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="/splash/1640x2360.png" media="(device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="/splash/2048x2732.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Maktab Vazifa" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>Maktab Vazifa</title>
+
+    <style>
+      /* ===== Splash ekran (React yuklanguncha ham ko'rinadi) ===== */
+      html.no-splash #splash { display: none; }
+      #splash {
+        position: fixed; inset: 0; z-index: 9999; overflow: hidden;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        padding: env(safe-area-inset-top) 24px env(safe-area-inset-bottom);
+        background: linear-gradient(160deg, #4670F2 0%, #2B56E5 48%, #1B39AD 100%);
+        color: #fff; font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+        transition: opacity .5s ease, transform .5s ease, visibility .5s;
+      }
+      #splash.hide { opacity: 0; visibility: hidden; transform: scale(1.06); pointer-events: none; }
+
+      #splash .blob { position: absolute; border-radius: 50%; filter: blur(2px); opacity: .5;
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.28), rgba(255,255,255,0) 70%);
+        animation: sp-float 7s ease-in-out infinite; }
+      #splash .b1 { width: 320px; height: 320px; top: -90px; left: -110px; }
+      #splash .b2 { width: 260px; height: 260px; bottom: -70px; right: -80px; animation-delay: -3s; }
+      #splash .b3 { width: 120px; height: 120px; top: 22%; right: 12%; opacity: .35; animation-delay: -5s; }
+
+      #splash .tile {
+        position: relative; width: 124px; height: 124px; border-radius: 34px;
+        display: grid; place-items: center;
+        background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.28);
+        box-shadow: 0 24px 60px rgba(8,20,80,.45), inset 0 1px 0 rgba(255,255,255,.35);
+        animation: sp-pop .8s cubic-bezier(.2,1.3,.4,1) both;
+      }
+      #splash .tile::after { content: ""; position: absolute; inset: -14px; border-radius: 44px;
+        border: 2px solid rgba(255,255,255,.35); animation: sp-ring 2s ease-out .7s infinite; }
+      #splash svg { width: 76px; height: 76px; overflow: visible; }
+
+      #splash .ln { stroke-dasharray: 1; stroke-dashoffset: 0; }
+      #splash .l1 { animation: sp-write .5s ease-out .7s both; }
+      #splash .l2 { animation: sp-write .5s ease-out 1.0s both; }
+      #splash .l3 { animation: sp-write .5s ease-out 1.3s both; }
+      #splash .pen { transform-box: fill-box; animation: sp-pen 1.9s ease-in-out .5s both; }
+
+      #splash h1 { margin: 34px 0 6px; font-size: 34px; font-weight: 800; letter-spacing: -.02em;
+        animation: sp-up .7s ease-out .5s both; }
+      #splash p { margin: 0; font-size: 15px; font-weight: 500; opacity: .8; letter-spacing: .02em;
+        animation: sp-up .7s ease-out .75s both; }
+
+      #splash .bar { margin-top: 38px; width: 140px; height: 4px; border-radius: 4px;
+        background: rgba(255,255,255,.22); overflow: hidden; animation: sp-up .6s ease-out 1s both; }
+      #splash .bar i { display: block; height: 100%; width: 100%; border-radius: 4px; background: #FFE26A;
+        transform-origin: left; animation: sp-load 1.6s cubic-bezier(.4,0,.2,1) .9s both; }
+
+      @keyframes sp-pop   { from { opacity: 0; transform: scale(.4) rotate(-12deg); } to { opacity: 1; transform: none; } }
+      @keyframes sp-ring  { from { opacity: .8; transform: scale(.85); } to { opacity: 0; transform: scale(1.25); } }
+      @keyframes sp-write { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+      @keyframes sp-up    { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+      @keyframes sp-load  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+      @keyframes sp-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-22px); } }
+      @keyframes sp-pen {
+        0%   { transform: translate(-14px, 14px) rotate(-8deg); opacity: 0; }
+        15%  { opacity: 1; }
+        30%  { transform: translate(-6px, -10px); }
+        50%  { transform: translate(-6px, -6px); }
+        70%  { transform: translate(-6px, -2px); }
+        100% { transform: none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #splash, #splash * { animation: none !important; transition-duration: .01ms !important; }
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Onest:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Splash faqat sessiyadagi birinchi ochilishda to'liq ko'rsatiladi
+      try { if (sessionStorage.getItem("splash-seen")) document.documentElement.classList.add("no-splash"); } catch (e) {}
+    </script>
+    <script>
+      // Sahifa chizilishidan oldin mavzuni o'rnatamiz (miltillashning oldini olish)
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "dark" || (!t && matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.classList.add("dark");
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="splash" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+      <div class="tile">
+        <svg viewBox="0 0 64 64" fill="none">
+          <rect x="6" y="3" width="40" height="58" rx="7" fill="#fff" />
+          <path class="ln l1" pathLength="1" d="M15 19h22" stroke="#2B56E5" stroke-width="4" stroke-linecap="round" />
+          <path class="ln l2" pathLength="1" d="M15 31h22" stroke="#2B56E5" stroke-width="4" stroke-linecap="round" />
+          <path class="ln l3" pathLength="1" d="M15 43h14" stroke="#2B56E5" stroke-width="4" stroke-linecap="round" />
+          <g class="pen">
+            <polygon points="38.4,47.4 55,14.1 62.7,17.9 46.1,51.2" fill="#FFE26A" stroke="#2B56E5" stroke-width="1.6" stroke-linejoin="round" />
+            <polygon points="38.4,47.4 46.1,51.2 36.5,57.6" fill="#fff" stroke="#2B56E5" stroke-width="1.4" stroke-linejoin="round" />
+          </g>
+        </svg>
+      </div>
+      <h1>Maktab Vazifa</h1>
+      <p>Vazifalar bir joyda</p>
+      <div class="bar"><i></i></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

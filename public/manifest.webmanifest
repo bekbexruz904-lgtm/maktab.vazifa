@@ -1,0 +1,24 @@
+{
+  "name": "Maktab Vazifa",
+  "short_name": "Vazifa",
+  "description": "Maktab uchun uy vazifalari, kalendar va yutuqlar ilovasi",
+  "lang": "uz",
+  "dir": "ltr",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#2B56E5",
+  "theme_color": "#2B56E5",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Vazifalar", "url": "/vazifalar", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Kalendar", "url": "/kalendar", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

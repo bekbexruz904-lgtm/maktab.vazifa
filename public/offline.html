@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2B56E5" />
+    <title>Internet yo'q — Maktab Vazifa</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body {
+        margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        background: #F0F3FB; color: #12182E; text-align: center;
+      }
+      @media (prefers-color-scheme: dark) { body { background: #0C101E; color: #E8ECF8; } }
+      img { width: 88px; height: 88px; border-radius: 20px; }
+      h1 { font-size: 1.4rem; margin: 20px 0 8px; }
+      p { margin: 0 0 20px; color: #767F9B; max-width: 320px; line-height: 1.5; }
+      button {
+        background: #2B56E5; color: #fff; border: 0; border-radius: 12px;
+        padding: 12px 24px; font-size: 1rem; font-weight: 600; cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="/icon-192.png" alt="" />
+      <h1>Internet yo'q</h1>
+      <p>Serverga ulanib bo'lmadi. Internetni tekshirib, qayta urinib ko'ring.</p>
+      <button onclick="location.reload()">Qayta urinish</button>
+    </main>
+  </body>
+</html>
